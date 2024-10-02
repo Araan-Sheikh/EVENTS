@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .event { margin-bottom: 20px; }
-        img { max-width: 200px; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Events</h1>
-    <div id="events"></div>
+    <div id="events" class="events-container">
+        <!-- Events will be dynamically injected here -->
+    </div>
 
     <script>
         fetch('/events')
@@ -21,7 +19,7 @@
                 const eventsContainer = document.getElementById('events');
                 events.forEach(event => {
                     const eventDiv = document.createElement('div');
-                    eventDiv.classList.add('event');
+                    eventDiv.classList.add('event'); // Add the class for styling
                     eventDiv.innerHTML = `
                         <h3>${event.title}</h3>
                         <p>${event.description}</p>
