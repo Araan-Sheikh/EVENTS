@@ -6,6 +6,13 @@ const Event = require('./models/Event');
 require('dotenv').config();
 
 const app = express();
+const cors = require('cors');
+
+// Enable CORS for your frontend
+app.use(cors({
+    origin: 'https://eventsnm.netlify.app' 
+}));
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -67,10 +74,4 @@ app.post('/admin', auth, upload.single('image'), async (req, res) => {
         console.error('Error saving new event:', error);
         res.status(500).send('Internal Server Error');
     }
-});
-
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
