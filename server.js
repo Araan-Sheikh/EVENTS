@@ -63,3 +63,4 @@ app.post('/admin', auth, upload.single('image'), (req, res) => {
     newEvent.save();
     res.redirect('/');
 });
+}
