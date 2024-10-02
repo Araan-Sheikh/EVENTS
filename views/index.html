@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .event { margin-bottom: 20px; }
+        img { max-width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>Events</h1>
+    <div id="events"></div>
+
+    <script>
+        fetch('/events')
+            .then(response => response.json())
+            .then(events => {
+                const eventsContainer = document.getElementById('events');
+                events.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.classList.add('event');
+                    eventDiv.innerHTML = `
+                        <h3>${event.title}</h3>
+                        <p>${event.description}</p>
+                        ${event.image ? `<img src="${event.image}" alt="Event Image">` : ''}
+                        ${event.link ? `<a href="${event.link}">Link to Event</a>` : ''}
+                    `;
+                    eventsContainer.appendChild(eventDiv);
+                });
+            });
+    </script>
+</body>
+</html>
