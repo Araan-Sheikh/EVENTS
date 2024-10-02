@@ -44,10 +44,13 @@ const auth = (req, res, next) => {
 };
 
 // Serve index.html
+const path = require('path');
+
+// Serve index.html
 app.get('/', async (req, res) => {
     try {
         const events = await Event.find();
-        res.sendFile(__dirname + '/views/index.html'); // Serve index.html from the views directory
+        res.sendFile(path.join(__dirname, 'views', 'index.html')); // Correct path for index.html
     } catch (error) {
         console.error('Error fetching events:', error);
         res.status(500).send('Internal Server Error');
@@ -56,8 +59,9 @@ app.get('/', async (req, res) => {
 
 // Serve admin.html for the admin page
 app.get('/admin', (req, res) => {
-    res.sendFile(__dirname + '/views/admin.html'); // Serve admin.html from the views directory
+    res.sendFile(path.join(__dirname, 'views', 'admin.html')); // Correct path for admin.html
 });
+
 
 // Handle form submission for creating new events
 app.post('/admin', auth, upload.single('image'), async (req, res) => {
