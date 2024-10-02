@@ -33,6 +33,8 @@ const auth = (req, res, next) => {
     res.send('Unauthorized');
 };
 
+// ... [previous code]
+
 // Serve public event page
 app.get('/', async (req, res) => {
     const events = await Event.find();
@@ -44,8 +46,14 @@ app.get('/admin', (req, res) => {
     res.sendFile(__dirname + '/views/admin.html');
 });
 
+// Fetch events for public view
+app.get('/events', async (req, res) => {
+    const events = await Event.find();
+    res.json(events);
+});
+
 // Handle admin login and event submission
-app.post('/admin', auth, (req, res) => {
+app.post('/admin', auth, upload.single('image'), (req, res) => {
     const newEvent = new Event({
         title: req.body.title,
         description: req.body.description,
