@@ -8,7 +8,10 @@ require('dotenv').config();
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,8 +32,10 @@ const auth = (req, res, next) => {
     if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
         return next();
     }
-    res.send('Unauthorized');
+    console.log('Unauthorized access attempt with username:', username);
+    res.status(401).send('Unauthorized');
 };
+
 
 // ... [previous code]
 
