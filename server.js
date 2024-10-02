@@ -6,7 +6,6 @@ const Event = require('./models/Event');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -63,4 +62,3 @@ app.post('/admin', auth, upload.single('image'), (req, res) => {
     newEvent.save();
     res.redirect('/');
 });
-}
