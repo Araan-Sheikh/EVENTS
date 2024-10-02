@@ -37,33 +37,28 @@ const auth = (req, res, next) => {
 };
 
 
-// ... [previous code]
-
-// Serve public event page
 app.get('/', async (req, res) => {
-    const events = await Event.find();
-    res.sendFile(__dirname + '/views/index.html');
+    try {
+        const events = await Event.find();
+        res.sendFile(__dirname + '/views/index.html');
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
-// Admin panel
-app.get('/admin', (req, res) => {
-    res.sendFile(__dirname + '/views/admin.html');
-});
-
-// Fetch events for public view
-app.get('/events', async (req, res) => {
-    const events = await Event.find();
-    res.json(events);
-});
-
-// Handle admin login and event submission
-app.post('/admin', auth, upload.single('image'), (req, res) => {
-    const newEvent = new Event({
-        title: req.body.title,
-        description: req.body.description,
-        image: req.file ? '/uploads/' + req.file.filename : null,
-        link: req.body.link,
-    });
-    newEvent.save();
-    res.redirect('/');
+app.post('/admin', auth, upload.single('image'), async (req, res) => {
+    try {
+        const newEvent = new Event({
+            title: req.body.title,
+            description: req.body.description,
+            image: req.file ? '/uploads/' + req.file.filename : null,
+            link: req.body.link,
+        });
+        await newEvent.save();
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error saving new event:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
