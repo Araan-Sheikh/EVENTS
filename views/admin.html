@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <form action="/admin" method="POST" enctype="multipart/form-data">
+        <input type="text" name="username" placeholder="Admin Username" required><br>
+        <input type="password" name="password" placeholder="Admin Password" required><br>
+        <input type="text" name="title" placeholder="Event Title" required><br>
+        <textarea name="description" placeholder="Event Description" required></textarea><br>
+        <input type="file" name="image"><br>
+        <input type="text" name="link" placeholder="Event Link (optional)"><br>
+        <button type="submit">Submit Event</button>
+    </form>
+</body>
+</html>
